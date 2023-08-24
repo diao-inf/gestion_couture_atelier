@@ -1,0 +1,140 @@
+
+    <div class="bg-primary p-2 mb-4">
+        <h1 class="text-white ms-4" id="title-text">Article</h1>
+    </div>
+    <div class="alert h5" id="msg-info" role="alert" #msgInfo>
+      <marquee loop="1" behavior="slide" scrollamount="150" direction="left" id="txt">A simple primary alert—check it out!</marquee>
+    </div>
+    <form class="g-3" (ngSubmit)="saveData()" [formGroup]="articleForm">
+        <div class="row border border-3 mx-1 p-3">
+            <div class="col-md-6">
+              <div class="form-group my-2">
+                <label for="libelle">Libellé</label>
+                <input type="text" class="form-control" id="libelle" placeholder="Saisir le libellé" formControlName="libelle" (change)="OnLibelleChange($event)" [ngClass]="{
+                    'is-invalid': articleForm.get('libelle')?.touched && articleForm.get('libelle')?.invalid,
+                    'is-valid': articleForm.get('libelle')?.touched && articleForm.get('libelle')?.valid
+                  }" >
+                <div class="invalid-feedback" *ngIf="articleForm.get('libelle')?.touched">
+                    <span *ngIf="articleForm.get('libelle')?.errors?.['required']">Le libellé est obligatoire...</span>
+                    <span *ngIf="articleForm.get('libelle')?.errors?.['minlength']">Le libellé doit contenir minimun 5 caratères...</span>
+                    <span *ngIf="articleForm.get('libelle')?.errors?.['pattern']">Le libellé ne doit pas contenir des caractères spéciaux...</span>
+                    <span *ngIf="articleForm.get('libelle')?.errors?.['uniqueLibelle']">Le libellé existe déja...</span>
+                </div>
+              </div>
+              <div class="form-group my-2">
+                <label for="prix">Prix</label>
+                <input type="number" class="form-control" id="prix" placeholder="Saisir le prix" formControlName="prix" [ngClass]="{
+                    'is-invalid': articleForm.get('prix')?.touched && articleForm.get('prix')?.invalid,
+                    'is-valid': articleForm.get('prix')?.touched && articleForm.get('prix')?.valid
+                  }">
+                <div class="invalid-feedback" *ngIf="articleForm.get('prix')?.touched">
+                    <span *ngIf="articleForm.get('prix')?.errors?.['required']">Le prix est obligatoire</span>
+                    <span *ngIf="articleForm.get('prix')?.errors?.['min'] || articleForm.get('prix')?.errors?.['max']">Le prix doit être compris entre 10 et 1 000 000 F CFA.</span>
+                </div>
+              </div>
+              <div class="form-group my-2">
+                <label for="stock">Stock</label>
+                <input type="number" class="form-control" id="stock" placeholder="Saisir le stock" formControlName="stock" [ngClass]="{
+                    'is-invalid': articleForm.get('stock')?.touched && articleForm.get('stock')?.invalid,
+                    'is-valid': articleForm.get('stock')?.touched && articleForm.get('stock')?.valid
+                  }">
+                <div class="invalid-feedback" *ngIf="articleForm.get('stock')?.touched">
+                    <span *ngIf="articleForm.get('stock')?.errors?.['required']">Le stock est obligatoire</span>
+                    <span *ngIf="articleForm.get('stock')?.errors?.['min'] || articleForm.get('stock')?.errors?.['max']">Le stock doit être compris entre 1 et 10 000.</span>
+                </div>
+              </div>
+              <div class="form-group my-2">
+                <label for="categorie">Catégorie</label>
+                <select class="form-control text-primary" id="categorie" formControlName="categorie" (change)="onCategoryChange($event)" [ngClass]="{
+                    'is-invalid': articleForm.get('categorie')?.touched && articleForm.get('categorie')?.invalid,
+                    'is-valid': articleForm.get('categorie')?.touched && articleForm.get('categorie')?.valid
+                  }" *ngIf="categories.length > 0">
+                  <option>***** Veuillez Selectionner *****</option>
+                  <option *ngFor="let categorie of categories" [value]="categorie.id">{{ categorie.libelle }}</option>
+                </select>
+                <div class="invalid-feedback" *ngIf="articleForm.get('categorie')?.touched">
+                    <span *ngIf="articleForm.get('categorie')?.errors?.['required']">Le catégorie est obligatoire</span>
+                </div>
+              </div>
+              <div class="form-group my-2" *ngIf="fournisseurs.length > 0">
+                <label for="fournisseurs">Fournisseurs</label>
+
+                <ng-multiselect-dropdown
+                  [placeholder]="'Choisissez vos Fournisseurs'"
+                  [settings]="dropdownSettings"
+                  [data]="fournisseurs"
+                  name="drop"
+                  [ngModel]="selectedItems"
+                  (onSelect)="onItemSelect($event)"
+                  (onSelectAll)="onSelectAll($event)"
+                  #dropdown
+                >
+                </ng-multiselect-dropdown>
+
+                <!-- <ng-multiselect-dropdown
+                  [formControlName]="'fournisseurs'" ici valide
+                  [formControl]="articleForm.get('fournisseurs.id')" <!-- Utilisation de [formControl] au lieu de formControlName -->
+                  <!-- [placeholder]="'Choisissez vos Fournisseurs'"
+                  [settings]="dropdownSettings"
+                  [data]="fournisseurs" -->
+                  <!-- name="drop" -->
+                  <!-- [ngModel]="selectedItems" <!-- Utilisation de [ngModel] au lieu de [(ngModel)] -->
+                  <!-- (ngModelChange)="onNgModelChange($event)" <!-- Utilisation de (ngModelChange) pour mettre à jour selectedItems -->
+                  <!-- (onSelect)="onItemSelect($event)"
+                  (onSelectAll)="onSelectAll($event)" -->
+
+
+
+                <!-- <input type="text" class="form-control text-primary" id="fournisseurs" placeholder="Chercher un fournisseur" formControlName="fournisseurs" [ngClass]="{
+                    'is-invalid': articleForm.get('fournisseurs')?.touched && articleForm.get('fournisseurs')?.invalid,
+                    'is-valid': articleForm.get('fournisseurs')?.touched && articleForm.get('fournisseurs')?.valid
+                  }">
+                <div class="suggestions bg-light shadow-sm border border-3">
+                  <ul class="suggestion-list" style="font-size: 1.4rem;list-style-type: none;">
+                    <li>
+                      suggestion.prenom  suggestion.nom 
+                    </li>
+                  </ul>
+                </div>           -->
+              </div>
+            </div>
+            <div class="col-md-6 my-2">
+              <input type="file" id="img" style="display: none;" accept="image/*" formControlName="photo" (change)="onSelectImg($event)" [ngClass]="{
+                'is-invalid': articleForm.get('photo')?.touched && articleForm.get('photo')?.invalid,
+                'is-valid': articleForm.get('photo')?.touched && articleForm.get('photo')?.valid
+              }">
+              <label class="clickable-square border border-5 border-primary text-center" for="img" style="height: 17rem; width: 100%; background-image: url('https://img.freepik.com/vecteurs-libre/fond-lignes-bleues-dynamiques-degradees_23-2148995756.jpg?w=1380&t=st=1692294952~exp=1692295552~hmac=ba37d79910c10b883321ecb18e08bd5b1bc8659d2b1b821da57075e3729c310e');background-size: cover;background-position: center;">
+                <div *ngIf="!url" class="text text-white" style="margin-top: 10%; font-size: 3rem;" id="image">CLIQUER POUR CHOISIR UNE PHOTO</div>
+                <img *ngIf="url" class="bg-info" style="margin-top: .2%;"  alt="Image" height="99.2%" width="99.7%" [src]="url" >
+                  
+              </label>
+              <!-- <div class="invalid-feedback" *ngIf="articleForm.get('photo')?.touched">
+                <span *ngIf="articleForm.get('photo')?.hasError('required')">La photo est obligatoire</span>
+                <span *ngIf="articleForm.get('photo')?.hasError('invalidFormat')">Format de fichier non valide (jpg, jpeg, png, gif).</span>
+              </div> -->
+              <div class="form-group my-2">
+                <label for="ref">Référence (REF)</label>
+                <input type="text" class="form-control" id="ref" formControlName="reference" readonly>
+              </div>
+            </div>
+            <div class="row mt-3">
+                <div class="col text-center">
+                    <button class="btn btn-primary py-3 px-5" type="submit" [disabled]="!articleForm.valid" >{{ modeAjout? "Enregistrer (Ajout)":"Enregistrer (EDIT)" }}</button>
+                </div>
+            </div>
+        </div>
+    </form>
+
+
+<!-- <hr>
+
+<p> Dirty: {{ articleForm.dirty }} </p>
+<p> Pristine: {{ articleForm.pristine }} </p>
+<p> Valid: {{ articleForm.valid }} </p>
+<p> InValid: {{ articleForm.invalid }} </p>
+<p> Value: </p>
+<pre>{{ articleForm.value | json  }} </pre>
+ -->
+
+
+

@@ -1,0 +1,9 @@
+#msg{
+    display: none;
+}
+
+.cliquable:hover{
+    transform: scale(1.4);
+    padding-left: 14%;
+    cursor: pointer;
+}

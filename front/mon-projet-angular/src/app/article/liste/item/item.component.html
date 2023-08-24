@@ -1,0 +1,12 @@
+<tr class="row bg-light tr-hover d-flex align-items-center">
+    <td class="col"><img [src]="getFullImageUrl(InputArticle.photo!)" alt="Image de l'article" style="width: 5rem; height: 5rem" class="rounded-circle shadow border border-2 border-primary"></td>
+    <td class="col">{{ InputArticle.libelle }}</td>
+    <td class="col">{{ InputArticle.prix }}</td>
+    <td class="col">{{ InputArticle.stock }}</td>
+    <td class="col">{{ InputArticle.categorie_libelle }}</td>
+    <td class="col"><button class="btn btn-outline-primary px-4" (click)="editer(InputArticle)"><i class="bi bi-pencil-square"></i> Éditer</button></td>
+    <td class="col">
+        <button class="btn btn-outline-danger px-2"  (click)="supprimer(InputArticle)" [ngClass]="buttonClass"> <i class="bi bi-trash"></i> {{ buttonText }}</button>
+        <div [ngClass]="{'confirmation-message': showConfirmation}"></div>
+    </td>
+</tr>

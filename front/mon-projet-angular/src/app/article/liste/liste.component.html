@@ -1,0 +1,29 @@
+<div class=" border border-2 border-primary p-2 mb-4 mt-5" style="background-color: rgb(229, 229, 229);">
+    <h1 class="text-primary ms-4" id="title-text">Liste des articles</h1>
+</div>
+<div class="alert h5" id="msg-info" role="alert" #msgInfo>
+    <marquee loop="1" behavior="slide" scrollamount="150" direction="left" id="txt">A simple primary alert—check it out!</marquee>
+</div>
+<div class="row border border-3 mx-1 p-3" style="height: 100vh;">
+    <table class="table table-secondary table-striped table-hover">
+        <thead>
+            <tr class="row bg-primary">
+                <th class="col bg-primary text-white">Photo</th>
+                <th class="col bg-primary text-white">Libellé</th>
+                <th class="col bg-primary text-white">Prix</th>
+                <th class="col bg-primary text-white">Stock</th>
+                <th class="col bg-primary text-white">Catégorie</th>
+                <th class="col bg-primary text-white">Editer</th>
+                <th class="col bg-primary text-white">Supprimer</th>
+            </tr>
+        </thead>
+        <tbody *ngIf="articles.length > 0">
+            <app-item *ngFor="let article of articles" 
+                [InputArticle]="article"
+                (editClicked)="recevoirArticleEdite($event)"
+                (eventEmiittedDelete)="recevoirArticleDelete($event)"
+            >
+            </app-item>
+        </tbody>
+    </table>
+</div>

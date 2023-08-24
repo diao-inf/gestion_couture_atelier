@@ -1,0 +1,26 @@
+<!-- <p>article works!</p> -->
+<!-- <app-form [inputData]="allData" (eventEmmitter)="receiveObject($event)"></app-form> -->
+<!-- {{allData.category}} ooo -->
+
+<div class="container shadow-lg mt-5 p-5 mb-5">
+    <app-form-by-reactive-form #forme
+        [inputData]="allData" 
+        (eventEmmitter)="receiveObject($event)" 
+        [inputResponseArticle]="responseArticle" 
+        [inputResponseUpdateArticle] = "responseUpdateArticle"
+        [articleAEdite]="articleEdite" 
+        (eventEmitterArticleSuccess)="receiveArticleSuccess($event, liste)"
+        (eventEmitterArticleUpdatedSuccess)="receiveArticleUpdatedSuccess($event, liste)"
+        (eventEmitterArticleUpdated)="receiveArticleUpdated($event)" 
+        >
+    </app-form-by-reactive-form>
+
+    <app-liste #liste
+        [inputData]="allData"
+        [inputResponseArticleDeleted]="responseArticleDeleted"
+        (editArticleEvent)="recevoirArticleEditeInArticleComponent($event,forme)"
+        (deleteArticleEvent)="recevoirArticleDeleteInArticleComponent($event)"
+        (eventEmitterArticleDeleteSuccess)="receiveArticleDeleteSuccess($event, liste)"
+    ></app-liste>
+</div>
+

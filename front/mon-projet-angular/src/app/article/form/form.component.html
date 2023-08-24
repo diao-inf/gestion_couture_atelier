@@ -1,0 +1,57 @@
+<div class="container shadow-lg mt-5 p-5">
+    <div class="bg-primary p-2 mb-4">
+        <h1 class="text-white ms-4" id="title-text">Article</h1>
+    </div>
+    <div class="row border border-3 mx-1 p-3">
+      <div class="col-md-6">
+        <div class="form-group my-2">
+          <label for="libelle">Libellé</label>
+          <input type="text" class="form-control" id="libelle" placeholder="Saisir le libellé" (change)="onChangeLibele($event)">
+        </div>
+        <div class="form-group my-2">
+          <label for="prix">Prix</label>
+          <input type="number" class="form-control" id="prix" placeholder="Saisir le prix" (change)="onChangePrix($event)">
+        </div>
+        <div class="form-group my-2">
+          <label for="stock">Stock</label>
+          <input type="number" class="form-control" id="stock" placeholder="Saisir le stock" (change)="onChangeStock($event)">
+        </div>
+        <div class="form-group my-2">
+          <label for="categorie">Catégorie</label>
+          <select class="form-control text-primary" id="categorie" (change)="onCategoryChange($event)">
+            <option>***** Veuillez Selectionner *****</option>
+            <option *ngFor="let categorie of categories" [value]="categorie.id">{{ categorie.libelle }}</option>
+          </select>
+        </div>
+        <div class="form-group my-2">
+          <label for="fournisseurs">Fournisseurs</label>
+          <input type="text" class="form-control text-primary" id="fournisseurs" placeholder="Chercher un fournisseur" value="{{fournisseurChoisiEnChaine}}" (input)="onFournisseurInputChange($event)">
+          <div class="suggestions bg-light shadow-sm border border-3" *ngIf="suggestions && suggestions.length > 0">
+            <ul class="suggestion-list" style="font-size: 1.4rem;list-style-type: none;">
+              <li *ngFor="let suggestion of suggestions" (click)="selectSuggestion(suggestion)">
+                {{ suggestion.prenom }} {{ suggestion.nom }}
+              </li>
+            </ul>
+          </div>          
+        </div>
+      </div>
+      <div class="col-md-6 my-2">
+        <input type="file" id="img" style="display: none;" accept="image/*" (change)="onSelectImg($event)" >
+        <label class="clickable-square border border-5 border-primary text-center" for="img" style="height: 17rem; width: 100%; background-image: url('https://img.freepik.com/vecteurs-libre/fond-lignes-bleues-dynamiques-degradees_23-2148995756.jpg?w=1380&t=st=1692294952~exp=1692295552~hmac=ba37d79910c10b883321ecb18e08bd5b1bc8659d2b1b821da57075e3729c310e');background-size: cover;background-position: center;">
+          <div *ngIf="!url" class="text text-white" style="margin-top: 10%; font-size: 3rem;" id="image">CLIQUER POUR CHOISIR UNE PHOTO</div>
+          <img *ngIf="url" class="bg-info" style="margin-top: .2%;" [src]="url" alt="Image" height="260px" width="260px">
+            
+        </label>
+        <div class="form-group my-2">
+          <label for="ref">Référence (REF)</label>
+          <input type="text" class="form-control" id="ref" value="{{reference}}" readonly>
+        </div>
+    </div>
+    <div class="row mt-3">
+        <div class="col text-center">
+            <button class="btn btn-primary py-3 px-5" (click)="onSend()">Enregistrer</button>
+        </div>
+    </div>
+    </div>
+  </div>
+  

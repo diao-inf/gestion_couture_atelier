@@ -1,0 +1,96 @@
+<div class="container mt-5 shadow-lg p-5">
+    <div class="row bg-primary p-2" id="coloredDivTitle">
+        <div class="col-md-8">
+            <h1 class="mt-2 text-white" id="title-text">Catégories</h1>
+        </div>
+        <div class="col-md-4">
+            <div class="row">
+                <div class="col-2"></div>
+                <div class="col-10 bg-light py-3 text-primary" id="bgToggGrup">
+                    <div class="form-check form-switch float-end">
+                        <input class="form-check-input mx-1" type="checkbox" id="toggleAdd" style=" width: 3.5rem;height: 2rem;" checked>
+                        <label class="form-check-label mx-3 text-decoration-underline" for="toggleAdd" style="font-size: 1.4rem;" id="editer-text">Editer</label>
+                    </div>
+                    <div class="form-check form-switch float-end">
+                        <!-- <input class="form-check-input" type="checkbox" id="toggleEdit"> -->
+                        <label class="form-check-label" for="toggleAdd" style="font-size: 1.4rem;" id="ajouter-text">Ajouter</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row mt-5 my-5">
+        <div class="col-md-1 ps-0" style="font-size: 1.4rem;">
+            <label for="categoryLabel">Libellé :</label>
+        </div>
+        <div class="col-md-4">
+            <input type="text" class="form-control" id="categoryLabel" disabled>
+        </div>
+        <div class="col-md-2">
+            <button class="btn btn-primary" id="btn-add-categorie" disabled>Enregistrer</button>
+        </div>
+
+        <div class="col-md-3 d-flex justify-content-end" style="font-size: 1.3rem;">
+            <label for="NbCategoryLabel">Nombre catégorie par page :</label>
+        </div>
+        <div class="col-md-1 d-flex justify-content-end">
+            <input type="number" class="form-control px-3" id="nbCategoryLabel" min="3" max="7"  value="3">
+        </div>
+        <div class="col-md-1 d-flex justify-content-end pe-0">
+            <button class="btn btn-primary px-4" id="nbrCategoryParPage">OK</button>
+        </div>
+    </div>
+    <div class="alert h5" id="msg" role="alert">
+        <marquee loop="1" behavior="slide" scrollamount="150" direction="left" id="txt">A simple primary alert—check it out!</marquee>
+      </div>
+    <div class="row mt-4" style="background-color: rgb(181, 181, 181);">
+        <div class="col-md-6 text-white">
+            <h2>Liste de catégories</h2>
+        </div>
+        <div class="col-md-6 mt-1">
+            <div class="d-flex justify-content-end">
+                <button class="btn btn-danger px-4" id="btn-supprimer-checkbox" disabled>Supprimer</button>
+            </div>
+        </div>
+    </div>
+    <div class="row mt-2">
+        <div class="col-md-12 px-0">
+            <table class="table border border-3">
+                <thead>
+                    <tr>
+                        <th class="col-5" scope="col"><input type="checkbox" id="selectAll"> Sélectionner toute la page</th>
+                        <th class="col-7" scope="col">Libellé </th>
+                    </tr>
+                </thead>
+                <tbody *ngFor="let category of categories">
+                    <tr>
+                        <td><input class="categoryCheckbox" type="checkbox" (change)="onCategoryChange()" [attr.idValue]="category.id"></td>
+                        <td class="text-primary" (click)="onCategoryClick(category.libelle)"><div class="cliquable libelleLigne"  id="" title="Selectionner editer puis cliquer pour modifier">{{category.libelle}}</div></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <nav aria-label="Page navigation example">
+        <div class="h6 text-center">Total Catégories: <span class="text-primary">{{totalElements}}</span> &nbsp;&nbsp;&nbsp; - &nbsp;&nbsp;&nbsp; Page <span class="text-primary">{{currentPage}}</span> sur <span class="text-primary">{{totalPages}}</span></div>
+        <ul class="pagination justify-content-center">
+            <li class="page-item">
+                <a class="page-link bg-info text-white" (click)="goToPage(1)">Première</a>
+            </li>
+            <li class="page-item" [ngClass]="{ 'disabled': currentPage === 1 }">
+                <a class="page-link" (click)="goToPage(currentPage - 1)">&laquo; Précédente</a>
+            </li>
+            <ng-container *ngFor="let page of pages">
+                <li class="page-item" [class.active]="currentPage === page">
+                    <a class="page-link" href="#" (click)="goToPage(page)">{{page}}</a>
+                </li>
+            </ng-container>
+            <li class="page-item" [ngClass]="{ 'disabled': currentPage === totalPages }">
+                <a class="page-link" href="#" (click)="goToPage(currentPage + 1)">Suivante &raquo;</a>
+            </li>
+            <li class="page-item">
+                <a class="page-link bg-info text-white" (click)="goToPage(totalPages)">Dernière</a>
+            </li>
+        </ul>
+    </nav>
+</div>

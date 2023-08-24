@@ -1,0 +1,23 @@
+/* .ng-valid.ng-dirty:not(form) {
+    border: solid 2px lightgreen;
+}
+
+.ng-invalid.ng-dirty:not(form), .ng-invalid.ng-touched:not(form), .ng-invalid:not(form).form-submitted {
+    border: solid 2px lightcoral;
+} */
+
+/* .invalid-feeback{
+    color: red;
+} */
+
+/* .invalid-feedback {
+    height: 2rem; Ajustez la hauteur minimale selon vos besoins 
+    position: absolute;
+} */
+
+#msg-info{
+    display: none;
+    /* height: 4rem;
+    position: relative;
+    grid-auto-columns: min-content; */
+}
